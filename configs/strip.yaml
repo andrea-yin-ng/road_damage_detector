@@ -4,6 +4,7 @@ seed: 42
 
 data:
   manifest: data/manifest.csv
+  root: data/RDD2022
   img_size: 640            # long side; resize boxes with the image. FREEZE this for all runs.
   num_workers: 4
 
@@ -13,7 +14,7 @@ model:
   fpn_channels: 128
   head_convs: 2            # shrink if epochs are too slow
   strip_block: true       # Run 2 turns this on
-  strip_k: 9
+  strip_k: 11
 
 loss:
   focal_alpha: 0.25
