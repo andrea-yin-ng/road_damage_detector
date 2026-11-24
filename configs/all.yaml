@@ -1,0 +1,41 @@
+# Run 5: all three fixes together.
+name: run5_all
+seed: 42
+
+data:
+  manifest: data/manifest.csv
+  img_size: 640            # long side; resize boxes with the image. FREEZE this for all runs.
+  num_workers: 4
+
+model:
+  backbone: resnet34
+  pretrained: true         # ImageNet weights (approved)
+  fpn_channels: 128
+  head_convs: 2            # shrink if epochs are too slow
+  strip_block: true       # Run 2 turns this on
+  strip_k: 9
+
+loss:
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+  box_loss: giou
+
+sampling:
+  empty_fraction: 0.25     # Run 3 sets 0.25
+  repeat_factor: true     # Run 4 turns this on
+  rfs_threshold: null      # compute from class image-frequencies; see README
+
+train:
+  epochs: 30               # set after timing one epoch
+  batch_size: 16
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0001
+  warmup_iters: 500
+  amp: true
+  grad_clip: 10.0
+
+eval:
+  iou_thresh: 0.5
+  nms_iou: 0.6
+  score_thresh_for_f1: null   # choose on validation, then freeze and apply to test
