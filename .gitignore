@@ -221,3 +221,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data and outputs
+data/*
+!data/manifest.csv
+!data/.gitkeep
+runs/*
+!runs/.gitkeep
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.zip
+*.tar
+*.tar.gz
