@@ -1,3 +1,17 @@
+"""PyTorch Dataset over data/manifest.csv. 
+
+Contract (see CONTRACTS.md):
+    __getitem__ -> (image, target)
+    image  : FloatTensor [3, S, S], values 0..1 (ImageNet normalisation is done in the model)
+    target : {"boxes":  FloatTensor [N, 4] xyxy in RESIZED/PADDED pixel coords,
+              "labels": LongTensor  [N]    in {0..3},
+              "image_id": int,             # row index in the manifest
+              "scale": float,              # resized_size / original_size (to map back)
+              "orig_size": (h, w)}         # original image size
+
+Images are resized so the long side == img_size, then padded (bottom/right) to a square.
+Because padding is bottom/right only, boxes are scaled by `scale` and need no shift.
+"""
 import json
 import os
 
